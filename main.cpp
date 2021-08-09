@@ -48,7 +48,7 @@ int main(int argc, char** argv) {
     }
     var /= repetition;
     chis[i] = mean;
-    stds[i] = std::sqrt(var);
+    stds[i] = std::sqrt(var / repetition);
   }
   for (int i = 0; i < N; i++) {
     result << Ls[i] << ' ' << chis[i] << ' ' << stds[i] << '\n';
