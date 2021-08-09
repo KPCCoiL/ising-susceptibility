@@ -1,5 +1,5 @@
-CXX=g++
-CXXFLAGS=-std=c++17 -Wall -Wextra -O2
+CXX=g++-11
+CXXFLAGS=-std=c++17 -Wall -Wextra -O2 -fopenmp
 
 ising: main.o ising.o
 	$(CXX) $(CXXFLAGS) main.o ising.o -o ising

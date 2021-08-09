@@ -12,7 +12,7 @@ public:
 
   void flip_spin(std::size_t site);
 
-  double magnetization_square() const;
+  int magnetization() const;
   inline double energy() const {
     return -interaction * same_direction;
   }
@@ -23,13 +23,10 @@ public:
 private:
   std::size_t num_spin;
   std::vector<bool> spin_up;
+  int total_spin;
   double interaction;
   int same_direction;
   std::vector<std::vector<Site>> neighbors;
 };
 
-struct IsingQuantities {
-  double energy, magnetization_square, specific_heat;
-};
-
-IsingQuantities expectation_values(IsingModel& ising, double temperature, int steps);
+double susceptibility(IsingModel& ising, double temperature, long long steps);
