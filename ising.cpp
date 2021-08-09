@@ -65,6 +65,7 @@ double susceptibility(IsingModel& ising, double temperature, long long steps) {
   double energy = ising.energy();
   std::uniform_int_distribution<> choose_spin(0, spins - 1);
   int acceptance = 0;
+  int measured_steps = 0;
 
   for (long long step = 0; step < steps; step++) {
     int site = choose_spin(rng);
@@ -79,14 +80,15 @@ double susceptibility(IsingModel& ising, double temperature, long long steps) {
       ising.flip_spin(site);
     }
 
-    if (step >= discard) {
+    // O(N) steps are required to try flipping all the sites
+    if (step >= discard && step % ising.count_spins() == 0) {
       auto M = ising.magnetization();
       sum_M += M;
       sum_Msquare += M * M;
+      measured_steps++;
     }
   }
 
-  int measured_steps = steps - discard;
   std::clog << (static_cast<double>(acceptance) / steps) << std::endl;
   double mean_M = static_cast<double>(sum_M) / static_cast<double>(measured_steps),
     mean_Msquare = static_cast<double>(sum_Msquare) / static_cast<double>(measured_steps),
